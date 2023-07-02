@@ -10,10 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import haza.demo.domain.WorkList;
-import lombok.extern.slf4j.Slf4j;
 
 @SpringBootTest
-@Slf4j
 class JdbcListRepositoryTest {
 	
 	@Autowired JdbcListRepository repository;
@@ -24,9 +22,7 @@ class JdbcListRepositoryTest {
 		WorkList list = new WorkList();
 		list.setWork("addTest");
 		list.setMemo("addMemo");
-		log.info("list.getWork() : {}", list.getWork());
 		WorkList saveList = repository.save(list);
-		log.info("saveList.getWork() : {}", saveList.getWork());
 		assertThat(list.getWorkNo()).isEqualTo(saveList.getWorkNo());
 	}
 	
@@ -51,7 +47,6 @@ class JdbcListRepositoryTest {
 		repository.save(listTwo);
 		repository.save(listThree);
 		List<WorkList> result = repository.search("search");
-		log.info("result.size() : {}", result.size());
 		assertThat(result.size()).isEqualTo(3);
 	}
 	@Test

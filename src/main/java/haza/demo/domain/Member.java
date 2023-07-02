@@ -1,21 +1,32 @@
 package haza.demo.domain;
 
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter @Setter
+import java.sql.Date;
+import java.sql.Timestamp;
+
+@Data
+@NoArgsConstructor
 public class Member {
 
 	private Long memberNo;
 	private String name;
-	private String id;
+	private String username;
 	private String password;
-	
-	public Member() {}
-	
-	public Member(String name, String id, String password) {
+	private String role;
+	private Date joinDate;
+
+	public Member(String name, String username, String password) {
 		this.name = name;
-		this.id = id;
+		this.username = username;
+		this.password = password;
+	}
+
+	public Member(String username, String password) {
+		this.username = username;
 		this.password = password;
 	}
 }

@@ -23,8 +23,11 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/list")
 public class ListController {
 	
-	@Autowired ListRepository repository;
-	
+	private final ListRepository repository;
+	public ListController(ListRepository repository) {
+		this.repository = repository;
+	}
+
 	// DAILY =============================================================================
 	@GetMapping("/daily")
 	public String getDaily(@RequestParam(required = false) String date , Model model) {

@@ -19,6 +19,7 @@ import org.springframework.stereotype.Repository;
 
 import haza.demo.domain.WorkList;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 @Repository
 @Slf4j
@@ -106,8 +107,8 @@ public class JdbcListRepository implements ListRepository {
 	}
 
 	@Override
-	public List<WorkList> findAll() {
-		return jdbcTemplate.query("SELECT * FROM LIST", listRowMapper());
+	public List<WorkList> findAll(Long memberNo) {
+		return jdbcTemplate.query("SELECT * FROM LIST WHERE M_NO = ?", listRowMapper(), memberNo);
 	}
 
 	@Override

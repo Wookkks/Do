@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import haza.demo.domain.WorkList;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 public interface ListRepository {
 	
@@ -14,8 +15,8 @@ public interface ListRepository {
 	Optional<WorkList> findByNo(Long workNo);
 		
 	// 데일리 화면
-	List<WorkList> findAll();
-		
+	List<WorkList> findAll(Long memberNo);
+
 	// 검색
 	List<WorkList> search(String work);
 		
