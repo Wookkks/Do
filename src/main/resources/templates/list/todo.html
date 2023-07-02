@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>일정 상세</title>
+<link href="/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+* {
+	font-family: 'NanumSquareNeo-Variable';
+}
+
+#wrap {
+	position: relative;
+	background-color: #0d4270;
+}
+
+#slogan {
+	color: #fff;
+	left: 40%;
+	font-size: 80px;
+}
+
+#btn-search {
+	background-color: #f3d00a;
+	color: #07243e;
+	font-size: 16px;
+	font-weight: 800;
+}
+
+#btn-add {
+	border: #07243e;
+	background-color: #07243e;
+}
+
+.fs-4 {
+	color: #07243e;
+}
+
+.nav-link {
+	color: #07243e;
+}
+
+.nav-link:active {
+	background-color: #07243e;
+	color: #fff;
+}
+
+#active {
+	background-color: #07243e;
+	color: #fff;
+}
+
+.nav-link:hover {
+	background-color: #9fa8b1;
+	color: #fff;
+}
+
+#do {
+	font-size: 40px;
+}
+
+#buttonedit {
+	background-color: #07243e;
+	border: #07243e;
+}
+
+#buttonedit:hover{
+
+	background-color: rgb(77, 108, 173);
+	
+}
+
+.btn:hover{
+	background-color: rgb(77, 108, 173);
+}
+
+#button-addon1 {
+	background-color: rgb(228, 228, 214);
+	color: #07243e;
+}
+
+#button-addon2 {
+	background-color: rgb(228, 228, 214);
+	color: #07243e;
+}
+
+@media screen and (min-width:1200px) {
+	#form {
+		display: inline-block;
+		position: absolute;
+		right: 10%;
+		top: 70%;
+	}
+}
+
+@media screen and (min-width:971px) and (max-width:1199px) {
+	#form {
+		display: inline-block;
+		position: absolute;
+		right: 10%;
+		top: 70%;
+	}
+}
+
+@font-face {
+	font-family: 'NanumSquareNeo-Variable';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+</style>
+</head>
+<body>
+	<!-- HEADER START -->
+	<div id="wrap">
+		<!-- START : header -->
+		<header id="haeder" class="p-3 text-align">
+			<div class="container">
+				<div
+					class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+					<a href="/list/daily"
+						class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+						<svg class="bi me-2" width="40" height="32" role="img"
+							aria-label="Bootstrap">
+							<use xlink:href="#bootstrap" />
+						</svg>
+					</a>
+					<div>
+						<a href="/list/daily" class="logo px-2 text-secondary"> <img
+							src="/image/logo.png" alt="logo">
+						</a>
+					</div>
+					<div id="slogan">하자!인생</div>
+					<form id="form" action="/list/search"
+						class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+						<div class="row">
+							<input type="search" name="search"
+								class="form-control form-control-dark col mx-2"
+								placeholder="검색어를 입력하세요" aria-label="Search">
+							<button id="btn-search" type="submit"
+								class="btn btn-warning col-3">검 색</button>
+						</div>
+					</form>
+
+				</div>
+			</div>
+		</header>
+	</div>
+	<main id="main" class="d-flex flex-nowrap">
+		<!-- SIDEBAR START -->
+		<div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary"
+			style="width: 280px; height: 850px;">
+			<a href="#"
+				class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+				<svg class="bi pe-none me-2" width="40" height="32">
+					<use xlink:href="#bootstrap" />
+				</svg> <h class="fs-4">메뉴</h>
+			</a>
+			<hr>
+
+			<ul class="nav nav-pills flex-column mb-auto">
+
+				<li class="nav-item"><a href="/list/daily" class="nav-link"
+					aria-current="page"> <svg class="bi pe-none me-2" width="16"
+							height="16">
+							<use xlink:href="#home" />
+						</svg> 오늘 일정
+				</a></li>
+
+				<li><a href="/list/weekly" class="nav-link link-body-emphasis">
+						<svg class="bi pe-none me-2" width="16" height="16">
+							<use xlink:href="#speedometer2" />
+						</svg> 최근 일정
+				</a></li>
+
+				<li><a href="/list/manage" class="nav-link link-body-emphasis">
+						<svg class="bi pe-none me-2" width="16" height="16">
+							<use xlink:href="#table" />
+						</svg> 일정 관리
+				</a></li>
+
+			</ul>
+			<hr>
+		</div>
+		<!-- CONTAINER START -->
+		<div class="container-sm my-5" style="max-width: 800px">
+			<!-- FORM -->
+			<div class="container-sm" style="max-width: 600px">
+				<div class="py-5 text-center">
+					<h2>일정 상세</h2>
+				</div>
+				<form th:object="${work}" action="/list/daily" th:action method="post">
+					<div class="row my-2">
+						<div class="col">
+							<div class="col-2 fw-bold">
+								<label for="date">날짜</label>
+							</div>
+							<input class="form-control" type="date" th:field="${work.date}" id="date"
+								name="date" placeholder="" disabled>
+						</div>
+					</div>
+					<div class="row my-2">
+						<div class="col">
+							<div class="col-2 fw-bold">
+								<label for="price">오늘의 할 일</label>
+							</div>
+							<input class="form-control" type="text" th:field="${work.work}" id="work" name="work" disabled>
+						</div>
+					</div>
+					<div class="row my-2">
+						<div class="col">
+							<div class="col-2 fw-bold">
+								<label for="memo">메모</label>
+							</div>
+							<div class="form-floating">
+								<textarea th:field="${work.memo}" class="form-control" id="floatingTextarea2"
+									style="height: 100px" disabled></textarea>
+							</div>
+						</div>
+					</div>
+					<div class="fw-bold">완료여부</div>
+					<div class="input-group mt-1">
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" th:checked="${work.workyn}" id="check"
+								disabled> <label for="check" class="form-check-label"  th:if="${work.workyn} == true">완료</label>
+							<label for="check" class="form-check-label"  th:if="${work.workyn} == false">미완료</label>
+						</div>
+					</div>
+					<hr class="my-3">
+					<div class="row">
+						<div class="col">
+							<button class="btn btn-outline-dark btn-lg w-100" type="button"
+								onclick="goBack()">닫기
+								 <script>
+		                           function goBack() {
+		                              window.history.back();}
+			                     </script>
+			                     </button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</main>
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ko" data-bs-theme="auto">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Hugo 0.111.3">
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+<title>로그인</title>
+
+<style>
+
+		* {
+			font-family: 'NanumSquareNeo-Variable';
+		}
+		
+		form{
+			font-family: 'NanumSquareNeo-Variable';
+		}
+
+		#wrap{
+			position: relative;
+			background-color: #0d4270;
+		}
+
+		#slogan {
+			color: #fff;
+			left: 40%;
+			font-size: 80px;
+		}
+		#btn-search {
+			background-color: #f3d00a;
+			color: #07243e;
+			font-size: 16px;
+			font-weight: 800;
+		}
+
+		#btn-add{
+			border: #07243e;
+			background-color: #07243e;
+		}
+
+		.fs-4 {
+			color: #07243e;
+		}
+
+		.nav-link {
+			color: #07243e;
+		}
+
+		.nav-link:active {
+			background-color: #07243e;
+			color: #fff;
+		}
+
+		#active {
+			background-color: #07243e;
+			color: #fff;
+		}
+
+
+		.nav-link:hover {
+			background-color: #9fa8b1;
+			color: #fff;
+		}
+
+		#do {
+			font-size: 40px;
+		}
+
+		.btn{
+			background-color: #07243e;
+			border: #07243e;
+			height: 60px;
+		}
+
+		.btn:hover{
+			background-color: rgb(77, 108, 173);
+			color: #fff;
+		}
+
+		#button-addon1 {
+			background-color: rgb(228, 228, 214);
+			color: #07243e;
+		}
+
+		#button-addon2 {
+			background-color: rgb(228, 228, 214);
+			color: #07243e;
+		}
+
+      .b-example-divider {
+        width: 100%;
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+      }
+
+      .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+      }
+
+      .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+      }
+
+      .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+      }
+
+      .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+
+			#login {
+				margin-top: 60px;
+			}
+			
+			#join{
+				background-color: rgb(103, 134, 236);
+				color: #fff;
+				border: 2px solid rgb(103, 134, 236);
+				height: 60px;
+				margin-top: 10px;
+			}
+
+			#join:hover{
+				background-color: rgb(77, 108, 173);
+	color: #fff;
+			}
+     
+			@media screen and (min-width:1200px) {
+			#form {
+				display: inline-block;
+				position: absolute;
+				right: 10%;
+				top: 70%;
+			}
+		}
+
+		@media screen and (min-width:971px) and (max-width:1199px) {
+			#form {
+				display: inline-block;
+				position: absolute;
+				right: 10%;
+				top: 70%;
+			}
+		}
+
+
+		@font-face {
+			font-family: 'NanumSquareNeo-Variable';
+			src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2') format('woff2');
+			font-weight: normal;
+			font-style: normal;
+		}
+		
+    </style>
+
+
+  <!-- Custom styles for this template -->
+  <link href="sign-in.css" rel="stylesheet">
+</head>
+<body class="text-center">
+	<div id="wrap">
+		<!-- START : header -->
+		<header id="haeder" class="p-3 text-align">
+			<div class="container">
+				<div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+					<a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+						<svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+							<use xlink:href="#bootstrap" />
+						</svg>
+					</a>
+					<div>
+						<a href="#" class="logo px-2 text-secondary">
+							<img src="/image/logo.png" alt="logo">
+						</a>
+					</div>
+					<div id="slogan">하자!인생</div>
+					<form id="form" action="/list/search" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+						</div>
+					</form>
+
+				</div>
+			</div>
+		</header>
+	</div>
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+</svg>
+<div class="container" style="max-width: 600px">
+	<div class="py-5 text-center">
+		<h1>로그인</h1>
+	</div>
+    <div class="form-floating m-2">
+      <input type="id" class="form-control" id="floatingInput" placeholder="아이디를 입력하세요...">
+      <label for="floatingInput">아이디</label>
+    </div>
+    <div class="form-floating m-2">
+      <input type="password" class="form-control" id="floatingPassword" placeholder="비밀번호를 입력하세요...">
+      <label for="floatingPassword">비밀번호</label>
+    </div>
+    <div>
+    <button id="login" class="w-100 btn btn-lg btn-primary" type="button" onclick="location.href=''">로그인</button>
+    </div>
+    <div>
+    <button id="join" class="w-100 btn btn-lg btn-primary" type="button" onclick="location.href='join'">회원가입</button>
+    </div>
+  </form>
+</div>
+
+</body>
+</html>
