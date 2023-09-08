@@ -3,6 +3,7 @@ package haza.demo.controller;
 import java.time.LocalDate;
 import java.util.List;
 
+import haza.demo.domain.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,9 @@ import haza.demo.domain.WorkList;
 import haza.demo.repository.ListRepository;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @Controller
 @Slf4j
 @RequestMapping("/list")
@@ -30,12 +34,14 @@ public class ListController {
 
 	// DAILY =============================================================================
 	@GetMapping("/daily")
-	public String getDaily(@RequestParam(required = false) String date , Model model) {
-		if(date == null) 
+	public String getDaily(@RequestParam(required = false) String date , Model model, HttpSession session) {
+		Long memberNo = (Long)session.getAttribute("memberNo");
+		if(date == null || date.isEmpty()) {
 			date = LocalDate.now().toString();
-	    List<WorkList> work = repository.findByDate(date);
+		}
+	    List<WorkList> work = repository.findAll(memberNo, date);
 	    model.addAttribute("workList", work);
-	    return "list/daily";
+	    return "/list/daily";
 	}
 	
 	@GetMapping("/date")
@@ -47,39 +53,44 @@ public class ListController {
 	}
 	
 	@GetMapping("/manage")
-	public String manage(Model model) {
-		List<WorkList> workTrue = repository.manageTrue();
-		List<WorkList> workFalse = repository.manageFalse();
+	public String manage(Model model, HttpSession session) {
+		Long memberNo = (Long)session.getAttribute("memberNo");
+		List<WorkList> workTrue = repository.manageTrue(memberNo);
+		List<WorkList> workFalse = repository.manageFalse(memberNo);
 		model.addAttribute("workTrue", workTrue);
 		model.addAttribute("workFalse", workFalse);
 		return "list/manage";
 	}
 	
 	@GetMapping("/search")
-	public String search(@RequestParam String search, Model model){
-		List<WorkList> work = repository.search(search);
+	public String search(@RequestParam String search, Model model, HttpSession session){
+		Long memberNo = (Long)session.getAttribute("memberNo");
+		List<WorkList> work = repository.search(search, memberNo);
+		model.addAttribute("searchWord", search);
 		model.addAttribute("search", work);
-		model.addAttribute("searchword", search);
 		return "list/searchList";
 	}
 	@GetMapping("/weekly")
-	public String weekly(Model model) {
-		List<WorkList> yesterday = repository.yestetday();
-		List<WorkList> today = repository.today();
-		List<WorkList> tomorrow = repository.tomorrow();
+	public String weekly(Model model, HttpSession session) {
+		Long memberNo = (Long)session.getAttribute("memberNo");
+		List<WorkList> yesterday = repository.yestetday(memberNo);
+		List<WorkList> today = repository.today(memberNo);
+		List<WorkList> tomorrow = repository.tomorrow(memberNo);
 		model.addAttribute("yesterday", yesterday);
 		model.addAttribute("today", today);
 		model.addAttribute("tomorrow", tomorrow);
 		return "list/weekly";
 	}
 	@GetMapping("/add")
-	public String add() {
+	public String add(HttpSession session) {
+		Long memberNo = (Long)session.getAttribute("memberNo");
 		return "list/addList";
 	}
 
 	@PostMapping("/add")
-	public String addList(@ModelAttribute WorkList workList, RedirectAttributes attributes) {
-	    repository.save(workList);
+	public String addList(@ModelAttribute WorkList workList, HttpSession session, RedirectAttributes attributes) {
+		Long memberNo = (Long)session.getAttribute("memberNo");
+	    repository.save(workList, memberNo);
 	    attributes.addAttribute("work", workList.getWork());
 	    return "redirect:/list/daily";
 	}
@@ -114,8 +125,9 @@ public class ListController {
 		return "list/addList";
 	}
 	@PostMapping("/add/week")
-	public String weekAddList(@ModelAttribute WorkList workList, RedirectAttributes attributes) {
-	    repository.save(workList);
+	public String weekAddList(@ModelAttribute WorkList workList, HttpSession session, RedirectAttributes attributes) {
+		Long memberNo = (Long)session.getAttribute("memberNo");
+	    repository.save(workList, memberNo);
 	    attributes.addAttribute("work", workList.getMemo());
 	    return "redirect:/list/weekly";
 	}

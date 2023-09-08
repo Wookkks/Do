@@ -40,21 +40,23 @@ public class JdbcListRepository implements ListRepository {
 				workList.setDate(rs.getDate("DATE"));
 				workList.setWork(rs.getString("WORK"));
 				workList.setMemo(rs.getString("MEMO"));
-				workList.setWorkyn(rs.getBoolean("WORKYN"));
+				workList.setWorkYn(rs.getBoolean("WORKYN"));
 				return workList;
 			}
 		};
 	}
 	
 	@Override
-	public WorkList save(WorkList workList) {
+	public WorkList save(WorkList workList, Long memberNo) {
 	    SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
-	    jdbcInsert.withTableName("LIST").usingGeneratedKeyColumns("WORKNO");
-	    Map<String, Object> parameters = new HashMap<>(); 
+	    jdbcInsert.withTableName("LIST").usingGeneratedKeyColumns("WORKNO")
+				.usingColumns("M_NO", "DATE", "WORK", "MEMO");
+
+	    Map<String, Object> parameters = new HashMap<>();
+		parameters.put("M_NO", memberNo);
 	    parameters.put("DATE", workList.getDate());
 	    parameters.put("WORK", workList.getWork());
 	    parameters.put("MEMO", workList.getMemo());
-	    parameters.put("WORKYN", workList.getWorkyn());
 	    Number key = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(parameters));
 	    workList.setWorkNo(key.longValue());
 	    return workList;
@@ -67,23 +69,24 @@ public class JdbcListRepository implements ListRepository {
 		return result.stream().findAny();
 	}
 	@Override
-	public List<WorkList> today() {
-		String sql = "SELECT * FROM LIST WHERE DATE = CURRENT_DATE()";
-		List<WorkList> result = jdbcTemplate.query(sql, listRowMapper());
+	public List<WorkList> today(Long memberNo) {
+		String sql = "SELECT * FROM LIST WHERE DATE = CURRENT_DATE() AND M_NO = ?";
+		List<WorkList> result = jdbcTemplate.query(sql, listRowMapper(), memberNo);
 		return result;
 	}
 	@Override
-	public List<WorkList> yestetday(){
-		String sql = "SELECT * FROM LIST WHERE DATE = CURRENT_DATE() - INTERVAL 1 DAY";
-		List<WorkList> result = jdbcTemplate.query(sql, listRowMapper());
+	public List<WorkList> yestetday(Long memberNo){
+		String sql = "SELECT * FROM LIST WHERE DATE = CURRENT_DATE() - INTERVAL 1 DAY AND M_NO = ?";
+		List<WorkList> result = jdbcTemplate.query(sql, listRowMapper(), memberNo);
 		return result;
 	}
 	@Override
-	public List<WorkList> tomorrow(){
-		String sql = "SELECT * FROM LIST WHERE DATE = CURRENT_DATE() + INTERVAL 1 DAY";
-		List<WorkList> result = jdbcTemplate.query(sql, listRowMapper());
+	public List<WorkList> tomorrow(Long memberNo){
+		String sql = "SELECT * FROM LIST WHERE DATE = CURRENT_DATE() + INTERVAL 1 DAY AND M_NO = ?";
+		List<WorkList> result = jdbcTemplate.query(sql, listRowMapper(), memberNo);
 		return result;
 	}
+
 	@Override
 	public List<WorkList> findByDate(String date) {
 		String sql = "SELECT * FROM LIST WHERE DATE = ?";
@@ -95,7 +98,7 @@ public class JdbcListRepository implements ListRepository {
 	public WorkList update(Long workNo, WorkList workList) {
 		String sql = "UPDATE LIST SET DATE = ?, WORK = ?, MEMO = ?, WORKYN = ? WHERE WORKNO = ?";
 		jdbcTemplate.update(sql, workList.getDate(), workList.getWork(), 
-				workList.getMemo(), workList.getWorkyn(), workNo);
+				workList.getMemo(), workList.getWorkYn(), workNo);
 		workList.setWorkNo(workNo);
 		return findByNo(workNo).get();
 	}
@@ -107,15 +110,17 @@ public class JdbcListRepository implements ListRepository {
 	}
 
 	@Override
-	public List<WorkList> findAll(Long memberNo) {
-		return jdbcTemplate.query("SELECT * FROM LIST WHERE M_NO = ?", listRowMapper(), memberNo);
+	public List<WorkList> findAll(Long memberNo, String date) {
+		String sql = "SELECT * FROM LIST WHERE M_NO = ? AND DATE LIKE ?";
+		String searchDate = "%" + date + " %";
+		return jdbcTemplate.query(sql, listRowMapper(), memberNo, date);
 	}
 
 	@Override
-	public List<WorkList> search (String work) {
-		String sql = "SELECT * FROM LIST WHERE WORK LIKE ?";
+	public List<WorkList> search (String work, Long memberNo) {
+		String sql = "SELECT * FROM LIST WHERE WORK LIKE ? AND M_NO = ?";
 		String search = "%" + work + "%";
-		return jdbcTemplate.query(sql, listRowMapper(), search);
+		return jdbcTemplate.query(sql, listRowMapper(), search, memberNo);
 	}
 	
 	public List<WorkList> find() {
@@ -123,14 +128,14 @@ public class JdbcListRepository implements ListRepository {
 	}
 
 	@Override
-	public List<WorkList> manageTrue() {
-		List<WorkList> workTrue = jdbcTemplate.query("SELECT * FROM LIST WHERE WORKYN = TRUE" , listRowMapper());
+	public List<WorkList> manageTrue(Long memberNo) {
+		List<WorkList> workTrue = jdbcTemplate.query("SELECT * FROM LIST WHERE WORKYN = TRUE AND M_NO = ?" , listRowMapper(), memberNo);
 		return workTrue;
 	}
 	
 	@Override
-	public List<WorkList> manageFalse() {
-		List<WorkList> workFalse = jdbcTemplate.query("SELECT * FROM LIST WHERE WORKYN = FALSE" , listRowMapper());
+	public List<WorkList> manageFalse(Long memberNo) {
+		List<WorkList> workFalse = jdbcTemplate.query("SELECT * FROM LIST WHERE WORKYN = FALSE AND M_NO = ?" , listRowMapper(), memberNo);
 		return workFalse;
 	}
 

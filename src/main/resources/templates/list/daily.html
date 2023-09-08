@@ -240,6 +240,9 @@ input[type="checkbox"] {
 			<hr>
 		</div>
 		<!-- CONTAINER START -->
+		<form action="/member/logout" method="post">
+		<button type="submit">로그아웃</button>
+		</form>
 		<div class="container-sm my-5" style="max-width: 800px">
 			<div class="py-2 text-center">
 				<h1 id="do">오늘의 할 일</h1>
@@ -269,7 +272,7 @@ input[type="checkbox"] {
 					<div class="input-group mt-1 col-12">
 						<div class="form-check">
 							<input class="form-check-input" type="checkbox"
-								th:checked="${work.workyn}" id="check" disabled> <label
+								th:checked="${work.workYn}" id="check" disabled> <label
 								for="check" class="form-check-label"></label>
 						</div>
 						<a id="task" th:href="@{/list/todo/} + ${work.workNo}"

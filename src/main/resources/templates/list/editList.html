@@ -188,7 +188,7 @@
 					<div class="row my-2">
 						<div class="col">
 							<div class="col-2 fw-bold">
-								<label for="price">날짜</label>
+								<label>날짜</label>
 							</div>
 							<input class="form-control" type="date" th:field="${work.date}" id="date"
 								name="itemName" placeholder="" >
@@ -197,7 +197,7 @@
 					<div class="row my-2">
 						<div class="col">
 							<div class="col-2 fw-bold">
-								<label for="itemName">오늘 할 일</label>
+								<label>오늘 할 일</label>
 							</div>
 							<input class="form-control" type="text" th:field="${work.work}" id="work" name="work">
 						</div>
@@ -205,7 +205,7 @@
 					<div class="row my-2">
 						<div class="col">
 							<div class="col-2 fw-bold">
-								<label for="memo">메모</label>
+								<label>메모</label>
 							</div>
 							<div class="form-floating">
 								<textarea th:field="${work.memo}" class="form-control" id="floatingTextarea2"
@@ -217,7 +217,7 @@
 					<div class="input-group mt-1">
 						<div class="form-check">
 							<input class="form-check-input" type="checkbox" 
-							th:checked="${work.workyn}" id="workyn" name="workyn"> 
+							th:checked="${work.workYn}" id="workYn" name="workYn">
 							<label for="check" class="form-check-label">완료</label>
 						</div>
 					</div>

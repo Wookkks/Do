@@ -62,15 +62,7 @@ public class JdbcMemberRepository implements MemberRepository{
 	}
 
 	@Override
-	public Optional<Member> findByNo(Long id) {
-		String sql = "SELECT * FROM MEMBER WHERE ID = ?";
-		List<Member> result = jdbcTemplate.query(sql, memberRowMapper(), id);
-		return result.stream().findAny();
-	}
-
-	@Override
 	public Optional<Member> findByUsernameAndPassword(String username, String password) {
-		System.out.println("findByUsernameAndPassword() 실행");
 		String sql = "SELECT * FROM MEMBER WHERE M_ID = ? AND M_PWD = ?";
 		List<Member> result = jdbcTemplate.query(sql, memberRowMapper(), username, password);
 		return result.stream().findAny();

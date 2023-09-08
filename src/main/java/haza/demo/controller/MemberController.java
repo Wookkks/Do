@@ -3,10 +3,7 @@ package haza.demo.controller;
 import haza.demo.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import haza.demo.domain.Member;
 import haza.demo.repository.MemberRepository;
@@ -27,21 +24,22 @@ public class MemberController {
 	public String login(HttpSession session) {
 		Long id = (Long)session.getAttribute("memberNo");
 		if(id != null) {
-			return "/list/daily";
+			return "redirect:/list/daily";
 		}
 		return "member/login";
 	}
 
 	@PostMapping("/login")
-	public String login(@ModelAttribute Member member, HttpSession session) {
+	public String login(Member member, HttpSession session) {
 		String username = member.getUsername();
 		String password = member.getPassword();
-		Long id = memberService.findMember(username, password);
-		if(id == null) {
+		Long memberNo = memberService.findMember(username, password);
+		if(memberNo == null) {
 			return "redirect:/member/login";
 		}
-		session.setAttribute("memberNo", id);
-		return "/list/daily";
+		session.setAttribute("memberNo", memberNo);
+		session.setMaxInactiveInterval(1800);
+		return "redirect:/list/daily";
 	}
 
 	@GetMapping("/join")
@@ -50,15 +48,16 @@ public class MemberController {
 	}
 	
 	@PostMapping("/join")
-	public String join(@ModelAttribute Member member) {
+	public String join(Member member, HttpSession session) {
 		memberService.save(member);
+		session.setAttribute("memberNo", member.getMemberNo());
+		session.setMaxInactiveInterval(1800);
 		return "member/join-result";
 	}
 
-	@GetMapping("/logout")
+	@PostMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
-		return "member/login";
+		return "redirect:/member/login";
 	}
-
 }
