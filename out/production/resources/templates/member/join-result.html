@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.orf" lang="ko" data-bs-theme="auto">
+<head>
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author"
+	content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+<meta name="generator" content="Hugo 0.111.3">
+<title>회원가입</title>
+
+<style>
+* {
+	font-family: 'NanumSquareNeo-Variable';
+}
+
+#wrap {
+	position: relative;
+	background-color: #0d4270;
+}
+
+#slogan {
+	color: #fff;
+	left: 40%;
+	font-size: 80px;
+}
+
+#btn-search {
+	background-color: #f3d00a;
+	color: #07243e;
+	font-size: 16px;
+	font-weight: 800;
+}
+
+#btn-add {
+	border: #07243e;
+	background-color: #07243e;
+}
+
+.fs-4 {
+	color: #07243e;
+}
+
+.nav-link {
+	color: #07243e;
+}
+
+.nav-link:active {
+	background-color: #07243e;
+	color: #fff;
+}
+
+#active {
+	background-color: #07243e;
+	color: #fff;
+}
+
+.nav-link:hover {
+	background-color: #9fa8b1;
+	color: #fff;
+}
+
+#do {
+	font-size: 40px;
+}
+
+.btn {
+	background-color: #07243e;
+	border: #07243e;
+}
+
+.btn:hover {
+	background-color: #f3d00a;
+}
+
+#button-addon1 {
+	background-color: rgb(228, 228, 214);
+	color: #07243e;
+}
+
+#button-addon2 {
+	background-color: rgb(228, 228, 214);
+	color: #07243e;
+}
+
+.b-example-divider {
+	width: 100%;
+	height: 3rem;
+	background-color: rgba(0, 0, 0, .1);
+	border: solid rgba(0, 0, 0, .15);
+	border-width: 1px 0;
+	box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em
+		rgba(0, 0, 0, .15);
+}
+
+@media screen and (min-width:1200px) {
+	#form {
+		display: inline-block;
+		position: absolute;
+		right: 10%;
+		top: 70%;
+	}
+}
+
+@media screen and (min-width:971px) and (max-width:1199px) {
+	#form {
+		display: inline-block;
+		position: absolute;
+		right: 10%;
+		top: 70%;
+	}
+}
+
+@font-face {
+	font-family: 'NanumSquareNeo-Variable';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+</style>
+
+
+<!-- Custom styles for this template -->
+<link href="sign-in.css" rel="stylesheet">
+</head>
+<body class="text-center">
+	<div id="wrap">
+		<!-- START : header -->
+		<header id="haeder" class="p-3 text-align">
+			<div class="container">
+				<div
+					class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+					<a href="/"
+						class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+						<svg class="bi me-2" width="40" height="32" role="img"
+							aria-label="Bootstrap">
+								<use xlink:href="#bootstrap" />
+							</svg>
+					</a>
+					<div>
+						<a href="#" class="logo px-2 text-secondary"> <img
+							src="/image/logo.png" alt="logo">
+						</a>
+					</div>
+					<div id="slogan">하자!인생</div>
+					<form id="form" action="/list/search"
+						class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+					</form>
+				</div>
+			</div>
+		</header>
+	</div>
+	<!-- START : container -->
+	<div class="container" style="max-width: 600px">
+		<div class="py-5 text-center">
+			<h3 th:text="${member.getName()}"></h3>
+			<h3>님 회원가입을 환영합니다.</h3>
+		</div>
+		<ul class="nav nav-pills flex-column mb-auto">
+			<li>
+				<a href="/list/daily" class="nav-link link-body-emphasis">
+				메인 페이지로
+				</a>
+			</li>
+		</ul>
+	</div>
+</body>
+</html>
+
+

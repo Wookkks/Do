@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>최근 일정</title>
+<link href="/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+* {
+	font-family: 'NanumSquareNeo-Variable';
+}
+
+#wrap {
+	position: relative;
+	background-color: #0d4270;
+}
+
+#slogan {
+	color: #fff;
+	left: 40%;
+	font-size: 80px;
+}
+
+.btn {
+	border: 1px solid rgb(185, 185, 169);
+}
+
+#btn-search {
+	background-color: #f3d00a;
+	color: #07243e;
+	font-size: 16px;
+	font-weight: 800;
+}
+
+#btn-add {
+	border: #07243e;
+	background-color: #07243e;
+}
+
+.fs-4 {
+	color: #07243e;
+}
+
+.nav-link {
+	color: #07243e;
+}
+
+.nav-link:active {
+	background-color: #07243e;
+	color: #fff;
+}
+
+#active {
+	background-color: #07243e;
+	color: #fff;
+}
+
+.nav-link:hover {
+	background-color: #9fa8b1;
+	color: #fff;
+}
+
+#do {
+	font-size: 40px;
+}
+
+#ul {
+	margin-top: 50px;
+	list-style: circle;
+}
+
+#row {
+	margin-top: 5px;
+	padding-top: 5px;
+}
+
+#button-addon1 {
+	background-color: rgb(190, 190, 178);
+	color: #07243e;
+}
+
+#button-addon1:hover {
+	background-color: rgb(77, 108, 173);
+	color: #fff;
+}
+
+#button-addon2 {
+	background-color: rgb(228, 228, 214);
+	border: rgb(228, 228, 214);
+	color: #07243e;
+}
+
+#button-addon2:hover {
+	background-color: rgb(77, 108, 173);
+	color: #fff;
+}
+
+#task {
+	display: inline-block;
+	border-bottom: 1px solid rgb(228, 228, 214);
+	width: 300px;
+	margin: 0;
+	padding: 0;
+	vertical-align: sub;
+	text-align: left;
+	text-decoration: none;
+	color: #07243e;
+}
+
+#task:hover {
+	font-weight: bolder;
+}
+
+col {
+	text-align: center;
+}
+
+@media screen and (min-width:1200px) {
+	#form {
+		display: inline-block;
+		position: absolute;
+		right: 10%;
+		top: 70%;
+	}
+}
+
+@media screen and (min-width:971px) and (max-width:1199px) {
+	#form {
+		display: inline-block;
+		position: absolute;
+		right: 10%;
+		top: 70%;
+	}
+}
+
+@font-face {
+	font-family: 'NanumSquareNeo-Variable';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+</style>
+</head>
+
+<body>
+	<div id="wrap">
+		<!-- START : header -->
+		<header id="haeder" class="p-3 text-align">
+			<div class="container">
+				<div
+					class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+					<a href="/list/daily"
+						class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+						<svg class="bi me-2" width="40" height="32" role="img"
+							aria-label="Bootstrap">
+                     <use xlink:href="#bootstrap" />
+                  </svg>
+					</a>
+					<div>
+						<a href="/list/daily" class="logo px-2 text-secondary"> <img
+							src="/image/logo.png" alt="logo">
+						</a>
+					</div>
+					<div id="slogan">하자!인생</div>
+					<form id="form" action="/list/search"
+						class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+						<div class="row">
+							<input type="search" name="search"
+								class="form-control form-control-dark col mx-2"
+								placeholder="검색어를 입력하세요" aria-label="Search">
+							<button id="btn-search" type="submit"
+								class="btn btn-warning col-3">검 색</button>
+						</div>
+					</form>
+
+				</div>
+			</div>
+		</header>
+	</div>
+
+	<main id="main" class="d-flex flex-nowrap">
+		<!-- SIDEBAR START -->
+		<div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary"
+			style="width: 280px; height: 850px;">
+			<a href="#"
+				class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+				<svg class="bi pe-none me-2" width="40" height="32">
+               <use xlink:href="#bootstrap" />
+            </svg> <h class="fs-4">메뉴</h>
+			</a>
+			<hr>
+
+			<ul class="nav nav-pills flex-column mb-auto">
+
+				<li class="nav-item"><a href="/list/daily" class="nav-link"
+					aria-current="page"> <svg class="bi pe-none me-2" width="16"
+							height="16">
+                     <use xlink:href="#home" />
+                  </svg> 오늘 일정
+				</a></li>
+
+				<li><a id="active" href="/list/weekly"
+					class="nav-link link-body-emphasis"> <svg
+							class="bi pe-none me-2" width="16" height="16">
+                     <use xlink:href="#speedometer2" />
+                  </svg> 최근 일정
+				</a></li>
+
+				<li><a href="/list/manage" class="nav-link link-body-emphasis">
+						<svg class="bi pe-none me-2" width="16" height="16">
+                     <use xlink:href="#table" />
+                  </svg> 일정 관리
+				</a></li>
+
+			</ul>
+			<hr>
+		</div>
+		<div class="container-sm my-5" style="max-width: 600px">
+			<div class="py-2 text-center">
+				<h1 id="do">어제의 한 일</h1>
+			</div>
+			<hr class="my-4">
+			<form action="" method="get" class="mb-2">
+				<input type="date" id="yesterday" class="form-control" disabled>
+				<script>
+               const nows = new Date();
+               nows.setDate(nows.getDate() - 1);
+               document.getElementById('yesterday').valueAsDate = nows
+            </script>
+			</form>
+			<a href="/list/add/week">
+				<button id="btn-add" type="button" class="btn btn-primary float-end">
+					일정 추가</button>
+			</a>
+			<ul id="ul" th:each="work: ${yesterday}">
+				<li id="row" class="row">
+				* <a id="task" th:href="@{/list/todo/} + ${work.workNo}" th:text="${work.work}">일정</a>
+					<button class="btn btn-outline-secondary col-2" type="button"
+						th:onclick="|location.href='@{/list/edit/week/{work.workNo}(work.workNo=${work.workNo})}'|"
+						id="button-addon1">수정</button>
+					<button class="btn btn-outline-secondary col-2" type="button"
+						th:onclick="|location.href='@{/list/delete/week/{work.workNo}(work.workNo=${work.workNo})}'|"
+						id="button-addon2">삭제</button>
+				</li>
+			</ul>
+		</div>
+       <!-- CONTAINER START -->
+      <div class="container-sm my-5" style="max-width: 600px">
+         <div class="py-2 text-center">
+      <!-- 패딩의 y축 지정 -->
+            <h1 id="do">오늘의 할 일</h1>
+         </div>
+         <hr class="my-4">
+         <form action="" method="get" class="mb-2">
+            <input type="date" id="currentDate" class="form-control" disabled>
+            <script>
+               document.getElementById('currentDate').valueAsDate = new Date();
+            </script>
+         </form>
+         <a href="/list/add/week" >
+         <button id="btn-add" type="button" class="btn btn-primary float-end">
+            일정 추가
+         </button>
+         </a>
+         <ul id="ul" th:each="work: ${today}" >
+            <li id="row" class="row" >*
+               <a id="task" th:href="@{/list/todo/} + ${work.workNo}" th:text="${work.work}">일정</a>
+                  <button class="btn btn-outline-secondary col-2" type="button"
+						th:onclick="|location.href='@{/list/edit/week/{work.workNo}(work.workNo=${work.workNo})}'|"
+						id="button-addon1">수정</button>
+					<button class="btn btn-outline-secondary col-2" type="button"
+						th:onclick="|location.href='@{/list/delete/week/{work.workNo}(work.workNo=${work.workNo})}'|"
+						id="button-addon2">삭제</button>
+            </li>
+         </ul>
+      </div>
+       <!-- CONTAINER START -->
+      <div class="container-sm my-5" style="max-width: 600px">
+         <div class="py-2 text-center">
+      <!-- 패딩의 y축 지정 -->
+            <h1 id="do">내일의 할 일</h1>
+         </div>
+         <hr class="my-4">
+         <form action="" method="get" class="mb-2">
+            <input type="date" id="tomorrow" class="form-control" disabled>
+            <script>
+               const now = new Date();
+               now.setDate(now.getDate() + 1);
+               document.getElementById('tomorrow').valueAsDate = now
+            </script>
+         </form>
+         <a href="/list/add/week" >
+         <button id="btn-add" type="button" class="btn btn-primary float-end">
+            일정 추가
+         </button>
+         </a>
+      <div>
+      </div>
+         <ul id="ul" th:each="work: ${tomorrow}">
+            <li id="row" class="row" >*
+               <a id="task" th:href="@{/list/todo/} + ${work.workNo}" th:text="${work.work}">일정</a>
+                 <button class="btn btn-outline-secondary col-2" type="button"
+						th:onclick="|location.href='@{/list/edit/week/{work.workNo}(work.workNo=${work.workNo})}'|"
+						id="button-addon1">수정</button>
+				 <button class="btn btn-outline-secondary col-2" type="button"
+						th:onclick="|location.href='@{/list/delete/week/{work.workNo}(work.workNo=${work.workNo})}'|"
+						id="button-addon2">삭제</button>
+            </li>
+         </ul>
+      </div>
+	</main>
+</body>
+</html>
